@@ -1,4 +1,5 @@
 import React from "react";
+import Swal from "sweetalert2";
 
 const AddCoffee = () => {
   const handleAddCoffee = (event) => {
@@ -11,8 +12,17 @@ const AddCoffee = () => {
     const taste = form.taste.value;
     const catagory = form.catagory.value;
     const details = form.details.value;
+    const photo = form.photo.value;
 
-    const newCoffee = { name, quantity, supplier, taste, catagory, details };
+    const newCoffee = {
+      name,
+      quantity,
+      supplier,
+      taste,
+      catagory,
+      details,
+      photo,
+    };
     console.log(newCoffee);
 
     // send data to server
@@ -26,6 +36,14 @@ const AddCoffee = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        if (data.insertedId) {
+          Swal.fire({
+            title: "Success!",
+            text: "Coffee Added Successful",
+            icon: "success",
+            confirmButtonText: "Cool",
+          });
+        }
       });
   };
   return (
@@ -40,6 +58,7 @@ const AddCoffee = () => {
             <label className="input-group">
               <input
                 type="text"
+                name="name"
                 placeholder="coffee name"
                 className="input input-bordered w-full"
               />
