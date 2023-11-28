@@ -32,7 +32,7 @@ const CoffeeCard = ({ coffee }) => {
   };
 
   return (
-    <div className="card card-side bg-base-100 shadow-xl">
+    <div className="card card-side shadow-xl p-6 bg-amber-50 ">
       <figure>
         <img src={photo} />
       </figure>
@@ -45,14 +45,14 @@ const CoffeeCard = ({ coffee }) => {
         </div>
 
         <div className="card-actions justify-end">
-          <div className="btn-group btn-group-vertical">
-            <button className="btn btn-active">View</button>
-            <Link to={`updateCoffee/${_id}`}>
-              <button className="btn">Edit</button>
-            </Link>
-            <button onClick={() => handleDelete(_id)} className="btn">
+          <div className="btn-group btn-group-vertical space-y-2">
+            <Link className="btn ">View</Link>
+            <Link className="btn ">Edit</Link>
+            <Link className="btn ">Delete</Link>
+            {/* <Link to={`updateCoffee/${_id}`}>Edit</Link>
+            <Link onClick={() => handleDelete(_id)} className="btn">
               Delete
-            </button>
+            </Link> */}
           </div>
         </div>
       </div>
