@@ -1,14 +1,14 @@
 import React from "react";
 import { useLoaderData } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const UpdateCoffee = () => {
   const coffee = useLoaderData();
   console.log(coffee);
   const { _id, name, quantity, supplier, taste, catagory, details, photo } =
     coffee;
-  const handleAddCoffee = (event) => {
+  const handleUpdateCoffee = (event) => {
     event.preventDefault();
-
     const form = event.target;
     const name = form.name.value;
     const quantity = form.quantity.value;
@@ -30,8 +30,8 @@ const UpdateCoffee = () => {
     console.log(newCoffee);
 
     // send data to server
-    fetch("http://localhost:5000/coffee", {
-      method: "POST",
+    fetch(`http://localhost:5000/coffee/${_id}`, {
+      method: "PUT",
       headers: {
         "content-type": "application/json",
       },
@@ -40,10 +40,10 @@ const UpdateCoffee = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        if (data.insertedId) {
+        if (data.modifiedCount > 0) {
           Swal.fire({
             title: "Success!",
-            text: "Coffee Added Successful",
+            text: "Coffee Updated Successfully! ",
             icon: "success",
             confirmButtonText: "Cool",
           });
@@ -52,14 +52,15 @@ const UpdateCoffee = () => {
   };
   return (
     <div>
-      <h2>Update a coffee: {name} </h2>
       <div className="bg-[#f4f3f0] p-24">
-        <h2 className="text-3xl font-extrabold">Add a coffee</h2>
-        <form onSubmit={handleAddCoffee}>
+        <h2 className="text-3xl font-extrabold">Update Coffee: {name}</h2>
+        <form onSubmit={handleUpdateCoffee}>
           <div className="md:flex">
             <div className="form-control md:w-1/2">
               <label className="label">
-                <span className="label-text">Coffee Name</span>
+                <span className="label-text" defaultValue={name}>
+                  Coffee Name
+                </span>
               </label>
               <label className="input-group">
                 <input
@@ -67,6 +68,7 @@ const UpdateCoffee = () => {
                   name="name"
                   placeholder="coffee name"
                   className="input input-bordered w-full"
+                  defaultValue={name}
                 />
               </label>
             </div>
@@ -80,6 +82,7 @@ const UpdateCoffee = () => {
                   name="quantity"
                   placeholder="available quantity"
                   className="input input-bordered w-full"
+                  defaultValue={quantity}
                 />
               </label>
             </div>
@@ -96,6 +99,7 @@ const UpdateCoffee = () => {
                   name="supplier"
                   placeholder="supplier"
                   className="input input-bordered w-full"
+                  defaultValue={supplier}
                 />
               </label>
             </div>
@@ -109,6 +113,7 @@ const UpdateCoffee = () => {
                   name="taste"
                   placeholder="taste"
                   className="input input-bordered w-full"
+                  defaultValue={taste}
                 />
               </label>
             </div>
@@ -125,6 +130,7 @@ const UpdateCoffee = () => {
                   name="catagory"
                   placeholder="catagory"
                   className="input input-bordered w-full"
+                  defaultValue={catagory}
                 />
               </label>
             </div>
@@ -138,6 +144,7 @@ const UpdateCoffee = () => {
                   name="details"
                   placeholder="details"
                   className="input input-bordered w-full"
+                  defaultValue={details}
                 />
               </label>
             </div>
@@ -154,6 +161,7 @@ const UpdateCoffee = () => {
                   name="photo"
                   placeholder="photo URL"
                   className="input input-bordered w-full"
+                  defaultValue={photo}
                 />
               </label>
             </div>
@@ -161,7 +169,7 @@ const UpdateCoffee = () => {
 
           <input
             type="submit"
-            value="Add Coffee"
+            value="Update Coffee"
             className="btn btn-block btn-neutral mt-4"
           />
         </form>
